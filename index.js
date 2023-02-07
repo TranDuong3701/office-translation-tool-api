@@ -2,7 +2,10 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 
+const database = require("./database");
+
 dotenv.config();
+database.connect();
 
 const app = express();
 
