@@ -20,9 +20,8 @@ const SegmentSchema = new mongoose.Schema(
       default: false,
     },
     metadata: {
-      key: String,
-      order: Number,
-      isSheetName: Boolean,
+      cellAddress: String,
+      sheetId: Number,
     },
   },
   {
