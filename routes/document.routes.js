@@ -9,6 +9,7 @@ router
   .route("/")
   .post(upload.single("document"), documentController.importDocument);
 
+router.get("/:id", documentController.getDocument);
 router.get("/:id/export", documentController.exportDocument);
 
 module.exports = router;

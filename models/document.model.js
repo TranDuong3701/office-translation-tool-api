@@ -29,8 +29,24 @@ const DocumentSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
+
+DocumentSchema.virtual("segments", {
+  ref: "Segment",
+  foreignField: "document",
+  localField: "_id",
+});
+
+DocumentSchema.virtual("progress").get(function () {
+  const translatedSegmentCount = this.segments.filter(
+    (segment) => segment.isLock
+  ).length;
+
+  return (translatedSegmentCount / this.segments.length) * 100;
+});
 
 const Document = mongoose.model("Document", DocumentSchema);
 

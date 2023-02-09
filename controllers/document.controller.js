@@ -22,4 +22,15 @@ async function exportDocument(req, res, next) {
     res.download(document.path);
   } catch (error) {}
 }
-module.exports = { importDocument, exportDocument };
+
+async function getDocument(req, res, next) {
+  try {
+    const document = await Document.findById(req.params.id).populate(
+      "segments"
+    );
+
+    res.status(200).json(document);
+  } catch (error) {}
+}
+
+module.exports = { importDocument, exportDocument, getDocument };
