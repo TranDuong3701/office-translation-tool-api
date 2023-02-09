@@ -15,4 +15,11 @@ async function importDocument(req, res, next) {
   } catch (error) {}
 }
 
-module.exports = { importDocument };
+async function exportDocument(req, res, next) {
+  try {
+    const document = await Document.findById(req.params.id);
+
+    res.download(document.path);
+  } catch (error) {}
+}
+module.exports = { importDocument, exportDocument };
