@@ -32,6 +32,25 @@ async function translateSegment(req, res, next) {
   } catch (error) {}
 }
 
+async function lockSegment(req, res, next) {
+  const { isLock } = req.body;
+  try {
+    const segment = await Segment.findByIdAndUpdate(
+      req.params.id,
+      {
+        isLock,
+      },
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
+
+    res.status(200).json(segment);
+  } catch (error) {}
+}
+
 module.exports = {
   translateSegment,
+  lockSegment,
 };
