@@ -49,7 +49,37 @@ async function importExcel(document) {
 
   return segments;
 }
+async function exportSheetName(document, segment) {}
+
+async function exportCell(document, segment) {
+  const { path } = document;
+  // Load an existing document
+  const workbook = await XlsxPopulate.fromFileAsync(path);
+  const sheets = workbook.sheets();
+
+  // Update cell
+  for (const sheet of sheets) {
+    const { _minRowNumber, _maxRowNumber, _minColumnNumber, _maxColumnNumber } =
+      sheet.usedRange();
+
+    for (let ri = _minRowNumber; ri <= _maxRowNumber; ri++) {
+      for (let ci = _minColumnNumber; ci <= _maxColumnNumber; ci++) {
+        const cell = sheet.row(ri).cell(ci);
+
+        const cellAddress = cell.address();
+        if (cellAddress === segment.metadata.cellAddress) {
+          cell.value(segment.target);
+        }
+      }
+    }
+  }
+
+  // Write wookbook to file
+  await workbook.toFileAsync(path);
+}
 
 module.exports = {
   importExcel,
+  exportSheetName,
+  exportCell,
 };
