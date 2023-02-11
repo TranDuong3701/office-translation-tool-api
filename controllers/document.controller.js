@@ -9,9 +9,9 @@ async function importDocument(req, res, next) {
       path,
     });
 
-    const segments = await excelService.importExcel(document);
+    await excelService.importExcel(document);
 
-    res.status(200).json({ document, segments });
+    res.status(200).json(document);
   } catch (error) {}
 }
 
