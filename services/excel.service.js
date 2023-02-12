@@ -49,10 +49,10 @@ async function importExcel(document) {
 
   return segments;
 }
-async function exportSheetName(document, segment) {}
+async function exportSheetName(segment) {}
 
-async function exportCell(document, segment) {
-  const { path } = document;
+async function exportCell(segment) {
+  const { document: { path } } = segment;
   // Load an existing document
   const workbook = await XlsxPopulate.fromFileAsync(path);
   const sheets = workbook.sheets();

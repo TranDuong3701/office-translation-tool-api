@@ -19,13 +19,14 @@ async function translateSegment(req, res, next) {
       select: ["path"],
     });
 
+
     // Update the segment in document
     if (segment.metadata.sheetId) {
-      await excelService.exportSheetName(segment.document, segment);
+      await excelService.exportSheetName(segment);
     }
 
     if (segment.metadata.cellAddress) {
-      await excelService.exportCell(segment.document, segment);
+      await excelService.exportCell(segment);
     }
 
     res.status(200).json(segment);

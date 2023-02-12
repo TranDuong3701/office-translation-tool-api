@@ -53,17 +53,12 @@ DocumentSchema.virtual("segments", {
 });
 
 DocumentSchema.virtual("progress").get(function () {
-  if (!this.segments) return 0;
+  if (!this.segments?.length) return 0;
 
   const translatedSegmentCount =
-    this.segments.filter((segment) => segment.isLock).length || 0;
+    this.segments.filter((segment) => segment.target).length;
 
-  return (translatedSegmentCount / this.segments.length) * 100;
-});
-
-DocumentSchema.pre("save", function (next) {
-  this.populate("segments");
-  next();
+  return Number((translatedSegmentCount / this.segments.length) * 100).toFixed(2);
 });
 
 const Document = mongoose.model("Document", DocumentSchema);
