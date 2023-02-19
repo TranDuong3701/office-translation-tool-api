@@ -3,10 +3,11 @@ const excelService = require("./../services/excel.service");
 
 async function importDocument(req, res, next) {
   try {
-    const { path, originalname: name } = req.file;
+    const { path, originalname: name, size } = req.file;
     const document = await Document.create({
       name,
       path,
+      size
     });
 
     await excelService.importExcel(document);

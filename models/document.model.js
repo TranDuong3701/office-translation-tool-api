@@ -11,6 +11,9 @@ const DocumentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    size: {
+      type: Number,
+    },
     owner: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: "User",
