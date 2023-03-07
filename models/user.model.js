@@ -5,7 +5,10 @@ const bcrypt = require("bcryptjs");
 const UserSchema = new mongoose.Schema(
   {
     username: String,
-    password: String,
+    password: {
+      type: String,
+      select: false
+    },
     email: String,
     avatar: String,
     role: {
@@ -34,6 +37,9 @@ UserSchema.methods.signToken = function () {
   return accessToken
 };
 
+UserSchema.methods.matchPassword = async function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
+};
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
