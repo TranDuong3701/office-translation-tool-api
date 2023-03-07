@@ -7,6 +7,7 @@ const globalErrorHandler = require('./controllers/error.controller')
 const database = require("./database");
 const documentRouter = require("./routes/document.routes");
 const segmentRouter = require("./routes/segment.routes");
+const authRouter = require("./routes/auth.routes");
 
 dotenv.config();
 database.connect();
@@ -19,6 +20,7 @@ app.use(morgan("dev"));
 
 app.use("/api/v1/documents", documentRouter);
 app.use("/api/v1/segments", segmentRouter);
+app.use("/api/v1/auth", authRouter);
 app.use(globalErrorHandler)
 
 const port = process.env.PORT || 8000;
