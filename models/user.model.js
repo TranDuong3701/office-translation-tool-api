@@ -19,6 +19,16 @@ const UserSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toObject: {
+      transform: function (doc, ret) {
+        delete ret.__v;
+      }
+    },
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.__v;
+      }
+    }
   }
 );
 
